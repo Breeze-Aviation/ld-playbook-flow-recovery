@@ -1,0 +1,17 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: Breeze-Aviation/cloudflare-deployment-template/.github/workflows/cloudflare-pages-deploy.yml@master
+    with:
+      custom_domain: 'ld-playbook-flow-recovery.flybreeze.app'
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN_DNS: ${{ secrets.CLOUDFLARE_API_TOKEN_DNS }}
+      CLOUDFLARE_ZONE_ID_FLYBREEZEAPP: ${{ secrets.CLOUDFLARE_ZONE_ID_FLYBREEZEAPP }}
