@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L&amp;D Playbook Skill — Flow &amp; Recovery Guide</title>
+    <style>
+        :root {
+            --warm-breeze-blue: #001633;
+            --breeze-blue: #1F74DF;
+            --cool-breeze-blue: #C1DDFF;
+            --cloud-white: #FFFFFF;
+            --sunset-pink: #FF527B;
+            --sunrise-tan: #FFD4AA;
+            --ink: #1a1a1a;
+            --muted: #666;
+            --border: #dfe5ec;
+            --success: #0A7A2F;
+            --warn: #C62828;
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        body {
+            font-family: 'Open Sans', 'Arial', sans-serif;
+            color: var(--ink);
+            background: #f4f7fc;
+            line-height: 1.5;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 32px 40px 48px;
+            background: var(--cloud-white);
+            box-shadow: 0 4px 24px rgba(0, 22, 51, 0.08);
+            border-radius: 6px;
+        }
+
+        header {
+            border-bottom: 4px solid var(--warm-breeze-blue);
+            padding-bottom: 20px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+        }
+        header h1 {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 30px;
+            color: var(--warm-breeze-blue);
+            margin: 0 0 6px 0;
+            letter-spacing: -0.4px;
+        }
+        header .subtitle {
+            font-size: 14px;
+            color: var(--muted);
+        }
+        header .brand {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--warm-breeze-blue);
+            text-align: right;
+            white-space: nowrap;
+        }
+        header .brand small {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: 4px;
+        }
+
+        h2 {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--warm-breeze-blue);
+            margin: 40px 0 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        h2 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--breeze-blue);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        section p.lead {
+            color: var(--muted);
+            font-size: 13.5px;
+            margin: 0 0 18px 48px;
+        }
+        section { margin: 32px 0 40px; }
+
+        /* Flow timeline */
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            margin-top: 14px;
+            align-items: stretch;
+        }
+        .flow-step {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 12.5px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .flow-step.start { border-color: var(--warm-breeze-blue); background: #f0f4fb; }
+        .flow-step.align { border-top: 6px solid var(--warm-breeze-blue); }
+        .flow-step.design { border-top: 6px solid var(--breeze-blue); }
+        .flow-step.build { border-top: 6px solid var(--success); }
+        .flow-step.launch { border-top: 6px solid var(--sunrise-tan); }
+        .flow-step.delivery { border-top: 6px dashed var(--sunset-pink); background: #fff5f7; }
+        .flow-step .label {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--warm-breeze-blue);
+            margin-bottom: 4px;
+            letter-spacing: 0.4px;
+        }
+        .flow-step .role {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .flow-step ul {
+            margin: 0;
+            padding-left: 16px;
+            font-size: 11.5px;
+        }
+        .flow-step ul li { margin-bottom: 3px; }
+
+        /* Checkpoint list — "you know it's working when..." */
+        .checkpoint-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .checkpoint-card {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-left: 6px solid var(--success);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        .checkpoint-card h4 {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--warm-breeze-blue);
+            margin: 0 0 6px 0;
+            letter-spacing: 0.2px;
+        }
+        .checkpoint-card .cat {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--success);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 4px;
+        }
+        .checkpoint-card ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 12px;
+        }
+        .checkpoint-card ul li { margin-bottom: 4px; line-height: 1.4; }
+
+        /* Recovery table — the star of the show */
+        .recovery-intro {
+            background: #fff5f7;
+            border-left: 5px solid var(--sunset-pink);
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 14px 0 20px;
+            font-size: 13.5px;
+        }
+        .recovery-intro strong {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            color: var(--warm-breeze-blue);
+        }
+        table.recovery {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+        table.recovery th {
+            background: var(--warm-breeze-blue);
+            color: white;
+            padding: 10px 14px;
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+        table.recovery th:first-child { border-radius: 6px 0 0 0; width: 36%; }
+        table.recovery th:last-child { border-radius: 0 6px 0 0; }
+        table.recovery td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        table.recovery tr:nth-child(even) td { background: #f7fafd; }
+        table.recovery .drift {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 600;
+            color: var(--warn);
+            font-size: 13px;
+        }
+        table.recovery .say {
+            font-style: italic;
+            color: var(--warm-breeze-blue);
+            font-family: 'Georgia', serif;
+        }
+        table.recovery .say strong {
+            font-style: normal;
+            font-family: 'Open Sans', 'Arial', sans-serif;
+            color: var(--warm-breeze-blue);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--muted);
+        }
+
+        /* Universal redirects */
+        .redirects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .redirect-card {
+            background: var(--cool-breeze-blue);
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-size: 13px;
+        }
+        .redirect-card .when {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            color: var(--warm-breeze-blue);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin-bottom: 6px;
+        }
+        .redirect-card .say {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            color: var(--warm-breeze-blue);
+            font-size: 13.5px;
+        }
+
+        /* Escalation */
+        .escalation {
+            background: white;
+            border: 2px solid var(--sunset-pink);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-top: 14px;
+        }
+        .escalation h3 {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--warm-breeze-blue);
+            margin: 0 0 8px 0;
+        }
+        .escalation p, .escalation ol {
+            font-size: 13.5px;
+            margin: 8px 0;
+        }
+        .escalation ol { padding-left: 22px; }
+        .escalation ol li { margin-bottom: 5px; }
+        .escalation code {
+            background: #f1f5fb;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 12.5px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 48px;
+            padding-top: 18px;
+            border-top: 2px solid var(--border);
+            font-size: 11px;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+        }
+        footer .footer-brand {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            font-weight: 700;
+            color: var(--warm-breeze-blue);
+        }
+
+        @media print {
+            body { background: white; }
+            .page { box-shadow: none; margin: 0; max-width: none; padding: 20px 26px; }
+            section, table.recovery, .checkpoint-grid, .flow { page-break-inside: avoid; }
+        }
+        @media (max-width: 900px) {
+            .flow, .checkpoint-grid, .redirects { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div>
+                <h1>Flow &amp; Recovery Guide</h1>
+                <div class="subtitle">How to move through the L&amp;D Playbook Skill — and how to redirect it when it drifts. For designers and stakeholders.</div>
+            </div>
+            <div class="brand">Breeze University<br><small>Learning &amp; Development</small></div>
+        </header>
+
+        <!-- SECTION 1: FLOW -->
+        <section>
+            <h2><span class="num">1</span>The Flow — start to finish</h2>
+            <p class="lead">One project, six blocks. The skill guides you through the flow one question at a time. Stakeholders enter at the start (as the requester) and again at the end (as the recipient of the launch). Designers move through every block.</p>
+
+            <div class="flow">
+                <div class="flow-step start">
+                    <div class="label">Open</div>
+                    <div class="role">Designer</div>
+                    <ul>
+                        <li>State what you need in plain English</li>
+                        <li>Share any existing content (docs, prior training, SOPs, prior decks)</li>
+                        <li>Skill picks the right Entry Point</li>
+                    </ul>
+                </div>
+                <div class="flow-step align">
+                    <div class="label">ALIGN</div>
+                    <div class="role">Designer + Stakeholder</div>
+                    <ul>
+                        <li>Problem framing (Q1-Q7)</li>
+                        <li>Audience analysis</li>
+                        <li>HPT cause analysis</li>
+                        <li>Risk tier confirmed</li>
+                        <li><strong>Gate:</strong> ALIGN docket to Core Team</li>
+                    </ul>
+                </div>
+                <div class="flow-step design">
+                    <div class="label">DESIGN</div>
+                    <div class="role">Designer</div>
+                    <ul>
+                        <li>Learner Story</li>
+                        <li>Design Strategy Canvas</li>
+                        <li>Bloom's objectives → capability</li>
+                        <li>Phillips V-Model measurement</li>
+                        <li><strong>Gate:</strong> Blueprint + Outline + Facilitator Guide</li>
+                    </ul>
+                </div>
+                <div class="flow-step build">
+                    <div class="label">BUILD</div>
+                    <div class="role">Designer</div>
+                    <ul>
+                        <li>Artifact generated (SCORM, deck, job aid)</li>
+                        <li>Fidelity check + 5-dimension QA</li>
+                        <li>SCORM Cloud test before Workday</li>
+                        <li>Calibration doc if regulated</li>
+                        <li><strong>Gate:</strong> Build Tracker</li>
+                    </ul>
+                </div>
+                <div class="flow-step launch">
+                    <div class="label">LAUNCH</div>
+                    <div class="role">Designer + Stakeholder</div>
+                    <ul>
+                        <li>Deployment plan</li>
+                        <li>Communication rollout</li>
+                        <li>L1 &amp; L2 measurement activated</li>
+                        <li>Early adoption monitored 2 weeks</li>
+                        <li><strong>Gate:</strong> Launch Summary</li>
+                    </ul>
+                </div>
+                <div class="flow-step delivery">
+                    <div class="label">05-DELIVERY</div>
+                    <div class="role">Assembled record</div>
+                    <ul>
+                        <li>Facilitator delivery package</li>
+                        <li>Calibration audit doc</li>
+                        <li>Project Summary</li>
+                        <li>Ready for any auditor, facilitator, or leader to pick up</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CHECKPOINTS -->
+        <section>
+            <h2><span class="num">2</span>You know the skill is working when…</h2>
+            <p class="lead">These are the signals of a healthy session. If several are missing, the skill has drifted — move to Section 3.</p>
+
+            <div class="checkpoint-grid">
+                <div class="checkpoint-card">
+                    <div class="cat">In ALIGN</div>
+                    <h4>Diagnosis before design</h4>
+                    <ul>
+                        <li>Asks about content documents first</li>
+                        <li>Walks canvas one question at a time</li>
+                        <li>Uses your language, then reframes to the real problem</li>
+                        <li>Runs HPT cause analysis before recommending training</li>
+                        <li>Confirms risk tier with the 3-dimension calculator</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-card">
+                    <div class="cat">In DESIGN</div>
+                    <h4>Capability-driven decisions</h4>
+                    <ul>
+                        <li>Bloom's level matches the target capability</li>
+                        <li>Learner Story shows before/during/after/proof</li>
+                        <li>Modality chosen with alternatives considered</li>
+                        <li>Measurement plan drafted before build</li>
+                        <li>Speaker notes populate in Facilitator Guide</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-card">
+                    <div class="cat">In BUILD</div>
+                    <h4>Standards enforced automatically</h4>
+                    <ul>
+                        <li>Bullets, cards, visuals — no walls of text</li>
+                        <li>Object overlap check runs after each change</li>
+                        <li>Guest / Team Member / Business Partner capitalized</li>
+                        <li>SCORM package tests in SCORM Cloud before Workday</li>
+                        <li>Green "LMS: Connected" badge appears on load</li>
+                    </ul>
+                </div>
+                <div class="checkpoint-card">
+                    <div class="cat">In LAUNCH</div>
+                    <h4>Impact, not just completion</h4>
+                    <ul>
+                        <li>L1 + L2 activated Day 1</li>
+                        <li>L3 owner named and scheduled</li>
+                        <li>Adoption watched for 2 weeks</li>
+                        <li>Lessons learned captured for the enterprise</li>
+                        <li>Deliverables saved to 05-DELIVERY folder</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: RECOVERY — pointing back to the playbook -->
+        <section>
+            <h2><span class="num">3</span>When the skill drifts — point it back to the playbook</h2>
+            <p class="lead">You don't need to memorize corrective phrases. Just tell the skill to check the playbook. It re-reads the reference and course-corrects on its own.</p>
+
+            <div class="recovery-intro">
+                <strong>The universal redirect:</strong> <em>"Check the playbook on [what it missed]."</em> The skill re-reads the relevant reference file and fixes its output. Your job is to <strong>spot the drift</strong>. This table shows what the skill should be doing at each moment — so you can recognize when it isn't.
+            </div>
+
+            <table class="recovery">
+                <thead>
+                    <tr>
+                        <th>If the skill does this…</th>
+                        <th>What the skill should be doing (per the playbook)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="drift">Jumps to solutioning without cause analysis.</span></td>
+                        <td class="say">Running the HPT Non-Training Decision framework first — asking whether the gap is knowledge/skill, process, tools, environment, or motivation — before recommending training.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Skips the opening question about existing content.</span></td>
+                        <td class="say">Running the Session Opening Protocol — asking whether you have SOPs, prior training, regulatory docs, or a prior deck to review before starting.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Fabricates a tool, vendor, or dashboard name.</span></td>
+                        <td class="say">Only referencing tools you've named or that are documented in the playbook. If a tool is needed, asking you rather than inventing one.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Writes prose instead of bullets, cards, or visuals.</span></td>
+                        <td class="say">Applying the Visual Content Standard — ≤8-word headlines, ≤10-word bullets (max 5 per slide), 40-60 words per page, 30%+ whitespace, visual treatments over paragraphs.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Uses "customer," "passenger," "employee," "contractor," "vendor."</span></td>
+                        <td class="say">Using Breeze language: Guest, Team Member, Business Partner — always capitalized. Running the QA terminology scan to catch substitutions.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Doesn't scale rigor to the tier.</span></td>
+                        <td class="say">Matching depth to tier. LOW = fast track, abbreviated tools. MEDIUM = full tools, 2 checkpoints. HIGH = full diagnostic, 3 checkpoints, evidence for every claim.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Self-classifies LOW when safety or regulatory is involved.</span></td>
+                        <td class="say">Applying the safety/regulatory auto-HIGH trigger — no LOW self-classification permitted when either is in play. Escalating to L&amp;D Core Team.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Writes feedback that references option position.</span></td>
+                        <td class="say">Writing feedback that names the concept, behavior, or claim — never "Option A" or "the first answer." Options shuffle; positions don't reinforce learning.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Generates SCORM without the SCORM Cloud test gate.</span></td>
+                        <td class="say">Requiring a SCORM Cloud test upload before Workday — confirming the green "LMS: Connected" badge, per-question interaction data, and completion event. Screenshot to Build Tracker.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Runs a training intake for a non-training L&amp;D artifact.</span></td>
+                        <td class="say">Routing to Entry Point 4 — the 4-6 lightweight intake questions for executive decks, briefings, memos, and other stakeholder communications about L&amp;D.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Gatekeeps on data you don't have.</span></td>
+                        <td class="say">Being data-informed, not data-dependent. Tracking missing data as an assumption with a validation plan and continuing to move forward.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Frames DELIVERY as a 5th phase.</span></td>
+                        <td class="say">Treating the lifecycle as 4 phases (ALIGN → DESIGN → BUILD → LAUNCH). DELIVERY is the assembled record in `05-DELIVERY/`, not a phase.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="drift">Starts generating an artifact without running intake.</span></td>
+                        <td class="say">Running the Session Opening Protocol first — every artifact-generation request from a Playbook-governed directory triggers skill-first execution.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 4: UNIVERSAL REDIRECTS -->
+        <section>
+            <h2><span class="num">4</span>Universal redirects — three phrases, any moment</h2>
+            <p class="lead">You don't need to remember the specifics. Three phrases handle almost every drift.</p>
+
+            <div class="redirects">
+                <div class="redirect-card">
+                    <div class="when">The go-to</div>
+                    <div class="say">"Check the playbook on [what it missed]."</div>
+                </div>
+                <div class="redirect-card">
+                    <div class="when">When you can't name what's wrong</div>
+                    <div class="say">"Something feels off — re-read the playbook and walk me through your reasoning."</div>
+                </div>
+                <div class="redirect-card">
+                    <div class="when">When you want a fresh start</div>
+                    <div class="say">"Reset — re-read the playbook and re-approach this from ALIGN."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ESCALATION -->
+        <section>
+            <h2><span class="num">5</span>When redirects aren't enough — escalate</h2>
+            <p class="lead">If the skill repeatedly drifts, or if a project raises enterprise concerns the skill can't resolve, escalate. This is a maturity signal, not a weakness.</p>
+
+            <div class="escalation">
+                <h3>Escalate when:</h3>
+                <ol>
+                    <li>The skill repeats the same drift after 2-3 corrections in the same conversation.</li>
+                    <li>The skill contradicts the playbook and you can't tell which is right.</li>
+                    <li>A stakeholder request conflicts with Breeze standards or values and the skill isn't pushing back.</li>
+                    <li>Safety, regulatory, or compliance considerations are present and the skill hasn't escalated to HIGH tier.</li>
+                    <li>You see a pattern — the same drift across multiple projects that other designers might also hit.</li>
+                </ol>
+
+                <h3>How to escalate:</h3>
+                <ol>
+                    <li>Note the drift — copy the specific skill output or paste the conversation snippet.</li>
+                    <li>Email <code>learning@flybreeze.com</code> with the subject <em>"Skill drift report — [what happened]"</em>.</li>
+                    <li>Include the project name, tier, and what you were trying to do.</li>
+                    <li>Continue your work using your own judgment — do not wait for a response to keep moving.</li>
+                </ol>
+
+                <h3>What happens with escalations:</h3>
+                <p>The L&amp;D Core Team reviews reported drifts and updates the skill's reference files or guardrails as needed. Every designer benefits from every report. You are helping build the skill by escalating — not slowing it down.</p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-brand">Breeze University | Learning &amp; Development</div>
+            <div>L&amp;D Playbook Skill · Flow &amp; Recovery Guide</div>
+        </footer>
+    </div>
+</body>
+</html>
